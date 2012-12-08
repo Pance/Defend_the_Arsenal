@@ -29,7 +29,9 @@ public class spike_game extends BasicGame{
 	public void init(GameContainer gc) throws SlickException {
 		land  = new Image("resources/background.jpeg");
 		player = new Image("resources/tux/idle/r/1.png");
+		player = player.getScaledCopy(2.0f);
 		troll = new Image("resources/troll/troll.png");
+		troll = troll.getScaledCopy(3.0f);
 		
 		for(int i=0; i<enemy_max; i++)
 			enemies.add(new Enemy());
@@ -54,6 +56,7 @@ public class spike_game extends BasicGame{
 	
 	public void render(GameContainer gc, Graphics g) throws SlickException {
 		land.draw(0,0);
+		
 		player.draw(player_x, player_y);
 		troll.draw(player_x+50, player_y+50);
 		for( Enemy e : enemies)
