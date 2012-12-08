@@ -12,11 +12,18 @@ import java.util.ArrayList;
 
 public class spike_game extends BasicGame{
 	
+	static final int PLAYER_START_X = 200;
+	static final int PLAYER_START_Y = 200;
+	static final int WINDOW_WIDTH = 1024;
+	static final int WINDOW_HEIGHT = 600;
+	
 	Image land = null;
-	Image player = null;
+	Image player_image = null;
 	Image troll = null;
 	int player_x = 200;
 	int player_y = 200;
+	
+	Player player = null;
 	
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	int enemy_max = 5;
@@ -27,9 +34,12 @@ public class spike_game extends BasicGame{
 	
 	@Override
 	public void init(GameContainer gc) throws SlickException {
+		
 		land  = new Image("resources/background.jpeg");
-		player = new Image("resources/tux/idle/r/1.png");
-		player = player.getScaledCopy(2.0f);
+		land = land.getScaledCopy(WINDOW_WIDTH, WINDOW_HEIGHT);
+		player_image = new Image("resources/tux/idle/r/1.png");
+		player_image = player_image.getScaledCopy(2.0f);
+		player = new Player(PLAYER_START_X, PLAYER_START_Y, player_image);
 		troll = new Image("resources/troll/troll.png");
 		troll = troll.getScaledCopy(3.0f);
 		
@@ -38,7 +48,7 @@ public class spike_game extends BasicGame{
 	}
 	
 	@Override
-	public void update(GameContainer gc, int deltsa) throws SlickException {
+	public void update(GameContainer gc, int delta) throws SlickException {
 		Input input = gc.getInput();
 		
 		if(input.isKeyDown(Input.KEY_A))
@@ -57,7 +67,7 @@ public class spike_game extends BasicGame{
 	public void render(GameContainer gc, Graphics g) throws SlickException {
 		land.draw(0,0);
 		
-		player.draw(player_x, player_y);
+		player_image.draw(player_x, player_y);
 		troll.draw(player_x+50, player_y+50);
 		for( Enemy e : enemies)
 			troll.draw(e.getX(), e.getY());
@@ -66,7 +76,7 @@ public class spike_game extends BasicGame{
 	public static void main(String[] args) throws SlickException {
 		AppGameContainer app = new AppGameContainer(new spike_game());
 		
-		app.setDisplayMode(1024, 768, false);
+		app.setDisplayMode(1024, 600, false);
 		app.start();
 	}
 }
