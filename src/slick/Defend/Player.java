@@ -11,19 +11,21 @@ public class Player {
 	private final double ACCELERATION_RATE = 160.0f; // Increase dx by this amount per second
 	private final double DECCELERATION_RATE = 130.0f;
 	private final double MAX_RUN_SPEED = 120.0f; // Maximum speed player can move px/second
-	private enum Facing { LEFT, RIGHT };
+	public enum Facing { LEFT, RIGHT };
+	private final double SLAP_COOLDOWN = 0.25f; // Seconds
 	
 	private double x_location;
 	private double y_location;
 	private double dx; // The player's current rate of change in x per second
 	private double dy; // The player's current rate of change in y per second
 	private Facing facing = Facing.RIGHT;
+	private int width = 300; // Width in pixels
 	
 	private Image imageRight;
 	private Image imageLeft;
 	private Environment environment;
 	
-	
+	long lastSlapMillis = System.currentTimeMillis();
 	
 	public Player(int x, int y, Environment e) {
 		x_location = x;
@@ -34,7 +36,7 @@ public class Player {
 	public void initImages() throws SlickException {
 		imageRight = new Image("resources/tux/idle/r/1.png").getScaledCopy(IMAGE_SCALE);
 		imageLeft = new Image("resources/tux/idle/l/1.png").getScaledCopy(IMAGE_SCALE);
-		
+		width = imageRight.getWidth();
 	}
 	
 	public void draw(){
@@ -84,6 +86,16 @@ public class Player {
 	}
 	
 	public void startSlap() {
-		//environment.
+		long now = System.currentTimeMillis();
+		long millisSinceLastSlap = now - lastSlapMillis;
+		if((millisSinceLastSlap * 0.001f) < SLAP_COOLDOWN)
+			return;
+		else {
+			int slap_pos = (int)x_location;
+			if(facing == Facing.RIGHT)
+				slap_pos+=width;
+			environment.slap((int)slap_pos, facing);
+			lastSlapMillis = now;
+		}
 	}
 }

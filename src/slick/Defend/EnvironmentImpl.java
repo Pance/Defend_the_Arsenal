@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import slick.Defend.Player.Facing;
+
 public class EnvironmentImpl implements Environment{
 	private final double GRAVITY = 3.0f;
 	private int width;
@@ -48,4 +50,14 @@ public class EnvironmentImpl implements Environment{
 	public double getGravity() {
 		return GRAVITY;
 	}
+	
+	public void slap(int x_position, Facing facing) {
+		for(Enemy e : enemies) {
+			if(e.collides(x_position)) {
+				e.knockback(facing);
+				return;
+			}
+		}
+	}
+	
 }

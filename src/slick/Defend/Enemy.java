@@ -1,9 +1,12 @@
 package slick.Defend;
 
+import slick.Defend.Player.Facing;
+
 public class Enemy {
 	private double x;
 	private double y;
 	private double speed = 20.0f; // pix/second
+	private int width = 200;
 	
 	private Player player;
 	
@@ -23,6 +26,19 @@ public class Enemy {
 	
 	public int getY() {
 		return (int)y;
+	}
+	
+	public boolean collides(int x_position) {
+		if(this.x < x_position && x_position < (this.x+width) )
+			return true;
+		return false;
+	}
+	
+	public void knockback(Facing direction) {
+		if(direction == Facing.RIGHT)
+			x+=200;
+		if(direction == Facing.LEFT)
+			x-=200;
 	}
 	
 	public void think(long millisSinceLastThink) {

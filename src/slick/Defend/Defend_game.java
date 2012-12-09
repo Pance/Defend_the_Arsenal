@@ -56,6 +56,8 @@ public class Defend_game extends BasicGame{
 		long now = System.currentTimeMillis();
 		
 		//input.isKeyDown()
+		if(input.isKeyDown(Input.KEY_SPACE))
+			player.startSlap();
 		if(input.isKeyDown(Input.KEY_A))
 			player.accelerateLeft(now - lastTime);
 		if(input.isKeyDown(Input.KEY_D))
