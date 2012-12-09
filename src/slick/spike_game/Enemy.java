@@ -1,8 +1,5 @@
 package slick.spike_game;
 
-import java.util.Date;
-import java.util.Random;
-
 public class Enemy {
 	private int x;
 	private int y;

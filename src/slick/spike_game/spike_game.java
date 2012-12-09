@@ -38,8 +38,9 @@ public class spike_game extends BasicGame{
 		Image ground = new Image("resources/ground.png");
 		environment = new EnvironmentImpl(WINDOW_WIDTH, WINDOW_HEIGHT, land, GROUND_HEIGHT, ground);
 		
-		Image player_image = new Image("resources/tux/idle/r/1.png");
-		player = new Player(PLAYER_START_X, PLAYER_START_Y, player_image, environment);
+		Image player_image_right = new Image("resources/tux/idle/r/1.png");
+		Image player_image_left = new Image("resources/tux/idle/l/1.png");
+		player = new Player(PLAYER_START_X, PLAYER_START_Y, player_image_right, player_image_left, environment);
 		
 		troll = new Image("resources/troll/troll.png");
 		troll = troll.getScaledCopy(3.0f);
