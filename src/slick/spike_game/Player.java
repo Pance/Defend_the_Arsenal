@@ -67,4 +67,8 @@ public class Player {
 			dx+= (ACCELERATION_RATE*2)/(timeSinceLastStep/1000);
 			*/
 	}
+	
+	public int getX() {
+		return (int) x_location;
+	}
 }

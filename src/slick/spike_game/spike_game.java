@@ -45,7 +45,7 @@ public class spike_game extends BasicGame{
 		troll = troll.getScaledCopy(3.0f);
 		
 		for(int i=0; i<MAX_ENEMIES; i++)
-			enemies.add(new Enemy());
+			enemies.add(new Enemy(player));
 		
 		lastTime = System.currentTimeMillis();
 	}
