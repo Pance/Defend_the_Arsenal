@@ -1,8 +1,8 @@
 package slick.Defend;
 
 public class Enemy {
-	private int x;
-	private int y;
+	private double x;
+	private double y;
 	
 	private Player player;
 	
@@ -17,20 +17,20 @@ public class Enemy {
 	}
 	
 	public int getX() {
-		return x;
+		return (int)x;
 	}
 	
 	public int getY() {
-		return y;
+		return (int)y;
 	}
 	
 	public void think() {
 		
 		// we just want to move towards the player
 		if( x > player.getX())
-			x--;
+			x-=0.5f;
 		if( x < player.getX())
-			x++;
+			x+=0.5f;
 		
 		//keep this guy on the screen
 		if(x > 800)
