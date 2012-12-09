@@ -23,7 +23,8 @@ public class Defend_game extends BasicGame{
 	Environment environment = null;
 	Player player = null;
 	
-	ArrayList<Enemy> enemies = new ArrayList<Enemy>();	
+	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+	ArrayList<Bomb> bombs = new ArrayList<Bomb>();
 	
 	public Defend_game(){
 		super("Defend the Arsenal!");
@@ -33,10 +34,8 @@ public class Defend_game extends BasicGame{
 	public void init(GameContainer gc) throws SlickException {		
 
 		environment = new EnvironmentImpl(WINDOW_WIDTH, WINDOW_HEIGHT, GROUND_HEIGHT, enemies);
-		environment.initImages();
 		
 		player = new Player(PLAYER_START_X, PLAYER_START_Y, environment);
-		player.initImages();
 				
 		for(int i=0; i<MAX_ENEMIES; i++) {
 			Enemy e = new Enemy(player);
@@ -67,6 +66,9 @@ public class Defend_game extends BasicGame{
 		
 		player.step(now - lastTime);
 		
+		for(Bomb b : bombs)
+			b.step(now - lastTime);
+		
 		for(Enemy e : enemies)
 			e.think(now - lastTime);
 		
@@ -79,6 +81,8 @@ public class Defend_game extends BasicGame{
 		environment.drawGround();
 		for( Enemy e : enemies)
 			e.draw();
+		for( Bomb b : bombs)
+			b.draw();
 	}
 	
 	public static void main(String[] args) throws SlickException {

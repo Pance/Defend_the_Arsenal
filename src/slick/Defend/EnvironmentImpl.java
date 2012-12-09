@@ -15,12 +15,14 @@ public class EnvironmentImpl implements Environment{
 	private Image backgroundImage;
 	private Image groundImage;
 	private ArrayList<Enemy> enemies;
+	private ArrayList<Bomb> bombs;
 	
-	public EnvironmentImpl(int width, int height, int groundHeight, ArrayList<Enemy> enemies){
+	public EnvironmentImpl(int width, int height, int groundHeight, ArrayList<Enemy> enemies) throws SlickException{
 		this.width = width;
 		this.height = height;
 		this.groundHeight = groundHeight;
 		this.enemies = enemies;
+		initImages();
 	}
 	
 	public void initImages() throws SlickException {
@@ -97,5 +99,9 @@ public class EnvironmentImpl implements Environment{
 			}
 		}
 		*/
+	}
+
+	public void addBomb(Bomb b) {
+		bombs.add(b);
 	}
 }

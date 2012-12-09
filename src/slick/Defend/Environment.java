@@ -12,6 +12,7 @@ public interface Environment {
 		void initImages() throws SlickException;
 		void slap(int x_position, Facing facing);
 		void launch(int x_position, Facing facing);
+		void addBomb(Bomb b);
 		//void setWidth(int w);
 		//void setHeight(int h);
 }

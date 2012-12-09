@@ -17,13 +17,14 @@ public class Enemy {
 	
 	private Player player;
 	
-	public Enemy() {
+	public Enemy() throws SlickException {
 		x = 0;
 		y = 250;
-		int groundHeight = (int)y;
+		groundHeight = (int)y;
+		initImages();
 	}
 	
-	public Enemy(Player player) {
+	public Enemy(Player player) throws SlickException {
 		this();
 		this.player = player;		
 	}
@@ -67,7 +68,7 @@ public class Enemy {
 	}
 	
 	public void think(long millisSinceLastThink) {
-		if( y < groundHeight+image.getHeight() ) {
+		if( y < groundHeight ) {
 			y+=(FALL_SPEED * ((double)millisSinceLastThink * 0.001f));
 		} else {
 			// if we aren't falling, we just want to move towards the player

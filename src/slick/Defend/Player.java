@@ -2,6 +2,7 @@ package slick.Defend;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 
 import java.util.ArrayList;
 
@@ -14,6 +15,7 @@ public class Player {
 	public enum Facing { LEFT, RIGHT };
 	private final double SLAP_COOLDOWN = 0.25f; // Seconds
 	private final double LAUNCH_CHARGE_TIME = 0.5f; // Seconds
+	private final double BOMB_COOLDOWN = 1.0f;
 	
 	private double x_location;
 	private double y_location;
@@ -25,17 +27,24 @@ public class Player {
 	private Image imageRight;
 	private Image imageLeft;
 	private Environment environment;
+	private SpriteSheet playerLeft;
+	private SpriteSheet playerRight;
 	
 	private long lastSlapMillis = System.currentTimeMillis();
 	private long chargeTimeMillis = 0;
+	private long lastBombMillis = 0;
 	
-	public Player(int x, int y, Environment e) {
+	public Player(int x, int y, Environment e) throws SlickException{
 		x_location = x;
 		y_location = y;
 		environment = e;
+		initImages();
 	}
 	
 	public void initImages() throws SlickException {
+		SpriteSheet sheetLeft = new SpriteSheet("resources/Hero_left.png", 2, 1);
+		SpriteSheet sheetRight = new SpriteSheet("resources/Hero_right.png", 2, 1);
+		
 		imageRight = new Image("resources/tux/idle/r/1.png").getScaledCopy(IMAGE_SCALE);
 		imageLeft = new Image("resources/tux/idle/l/1.png").getScaledCopy(IMAGE_SCALE);
 		width = imageRight.getWidth();
@@ -49,9 +58,7 @@ public class Player {
 	}
 	
 	public void step(long millisSinceLastStep) {
-		//if(isInAir())
-			//dy-=environment.getGravity();
-		//y_location = y_location + (dy/(millisSinceLastStep/1000));
+		lastBombMillis+=millisSinceLastStep;
 		if(dx != 0.0f)
 			x_location+=((double)dx * (millisSinceLastStep * 0.001f));
 	}
@@ -88,6 +95,7 @@ public class Player {
 	}
 	
 	long lastChargeMillis = 1;
+	
 	public void chargeSlap() {
 		long now = System.currentTimeMillis();
 		
@@ -123,4 +131,11 @@ public class Player {
 		chargeTimeMillis = (long)-0.00001f;
 	}
 	
+	public void launchBomb() throws SlickException {
+		if((lastBombMillis * 0.001f) > BOMB_COOLDOWN ) {
+			Bomb b = new Bomb((int)x_location, (int)y_location, 0, 0);
+			environment.addBomb(b);
+			lastBombMillis = System.currentTimeMillis();
+		}
+	}
 }
