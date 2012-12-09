@@ -56,6 +56,7 @@ public class Defend_game extends BasicGame{
 		
 		long now = System.currentTimeMillis();
 		
+		//input.isKeyDown()
 		if(input.isKeyDown(Input.KEY_A))
 			player.accelerateLeft(now - lastTime);
 		if(input.isKeyDown(Input.KEY_D))
@@ -67,10 +68,10 @@ public class Defend_game extends BasicGame{
 		//if(input.isKeyDown(Input.KEY_W))
 			//player.changeY(-1);
 		
-		player.step(now - lastTime);
+		//player.step(now - lastTime);
 		
 		for(Enemy e : enemies)
-			e.think();
+			e.think(now - lastTime);
 		
 		lastTime = now;
 	}

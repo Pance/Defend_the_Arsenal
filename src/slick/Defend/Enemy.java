@@ -3,6 +3,7 @@ package slick.Defend;
 public class Enemy {
 	private double x;
 	private double y;
+	private double speed = 20.0f; // pix/second
 	
 	private Player player;
 	
@@ -24,13 +25,14 @@ public class Enemy {
 		return (int)y;
 	}
 	
-	public void think() {
+	public void think(long millisSinceLastThink) {
 		
 		// we just want to move towards the player
+		//x_location+=(MAX_RUN_SPEED * (millisSinceLastStep * 0.001f));
 		if( x > player.getX())
-			x-=0.5f;
+			x-=(speed * ((double)millisSinceLastThink * 0.001f));
 		if( x < player.getX())
-			x+=0.5f;
+			x+=(speed * ((double)millisSinceLastThink * 0.001f));
 		
 		//keep this guy on the screen
 		if(x > 800)
