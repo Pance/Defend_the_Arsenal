@@ -28,8 +28,8 @@ public class EnvironmentImpl implements Environment{
 	public void initImages() throws SlickException {
 		//backgroundImage = new Image("resources/background.jpeg").getScaledCopy(width, height);
 		backgroundImage = new Image("resources/bg_ground_with_house.png").getScaledCopy(width, height);
-		groundImage = new Image("resources/ground.png");
-		groundImage = groundImage.getScaledCopy(width, groundImage.getHeight());
+		groundImage = new Image("resources/gate.png");
+		groundImage = groundImage.getScaledCopy(width, groundImage.getHeight()-100);
 	}
 	
 	public int getGroundHeight() {
