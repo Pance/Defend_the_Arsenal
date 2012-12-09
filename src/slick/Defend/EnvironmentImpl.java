@@ -51,13 +51,47 @@ public class EnvironmentImpl implements Environment{
 		return GRAVITY;
 	}
 	
+	private Enemy getClosestEnemy(int x_position, Facing facing) {
+		Enemy closest = null;
+		for(Enemy e : enemies) {
+			if(e.collides(x_position)) {
+				if(closest == null)
+					closest = e;
+				else {
+					if(facing == Facing.RIGHT) {
+						if(e.getX() < closest.getX() && e.getX() > x_position)
+							closest = e;
+					}
+				}
+			}
+		}
+		return closest;
+	}
+	
 	public void slap(int x_position, Facing facing) {
+		Enemy closestEnemy = getClosestEnemy(x_position, facing);
+		if(closestEnemy != null)
+			closestEnemy.knockback(facing);
+		/*
 		for(Enemy e : enemies) {
 			if(e.collides(x_position)) {
 				e.knockback(facing);
 				return;
 			}
-		}
+		}*/
 	}
 	
+	public void launch(int x_position, Facing facing) {
+		Enemy closestEnemy = getClosestEnemy(x_position, facing);
+		if(closestEnemy != null)
+			closestEnemy.fling(facing);
+		/*
+		for(Enemy e: enemies) {
+			if(e.collides(x_position)) {
+				e.fling(facing);
+				return;
+			}
+		}
+		*/
+	}
 }

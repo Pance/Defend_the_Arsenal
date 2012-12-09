@@ -44,7 +44,7 @@ public class Defend_game extends BasicGame{
 		troll = troll.getScaledCopy(3.0f);
 		
 		for(int i=0; i<MAX_ENEMIES; i++)
-			enemies.add(new Enemy(player));
+			enemies.add(new Enemy(player, troll));
 		
 		lastTime = System.currentTimeMillis();
 	}
@@ -57,7 +57,10 @@ public class Defend_game extends BasicGame{
 		
 		//input.isKeyDown()
 		if(input.isKeyDown(Input.KEY_SPACE))
-			player.startSlap();
+			player.chargeSlap();
+		else
+			player.unleashSlap();
+		
 		if(input.isKeyDown(Input.KEY_A))
 			player.accelerateLeft(now - lastTime);
 		if(input.isKeyDown(Input.KEY_D))

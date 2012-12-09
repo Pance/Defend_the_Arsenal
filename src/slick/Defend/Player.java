@@ -13,6 +13,7 @@ public class Player {
 	private final double MAX_RUN_SPEED = 120.0f; // Maximum speed player can move px/second
 	public enum Facing { LEFT, RIGHT };
 	private final double SLAP_COOLDOWN = 0.25f; // Seconds
+	private final double LAUNCH_CHARGE_TIME = 0.5f; // Seconds
 	
 	private double x_location;
 	private double y_location;
@@ -25,7 +26,8 @@ public class Player {
 	private Image imageLeft;
 	private Environment environment;
 	
-	long lastSlapMillis = System.currentTimeMillis();
+	private long lastSlapMillis = System.currentTimeMillis();
+	private long chargeTimeMillis = 0;
 	
 	public Player(int x, int y, Environment e) {
 		x_location = x;
@@ -85,17 +87,40 @@ public class Player {
 		return (int) x_location;
 	}
 	
-	public void startSlap() {
+	long lastChargeMillis = 1;
+	public void chargeSlap() {
 		long now = System.currentTimeMillis();
-		long millisSinceLastSlap = now - lastSlapMillis;
+		
+		long millisSinceLastSlap = now - lastSlapMillis;		
 		if((millisSinceLastSlap * 0.001f) < SLAP_COOLDOWN)
-			return;
+			return; // too soon to start charging again
 		else {
+			//we are charging
+			long timeSinceLastCharge = now - lastChargeMillis;
+			chargeTimeMillis += timeSinceLastCharge;
+			lastChargeMillis = now;
+		}
+	}
+	
+	public void unleashSlap() {
+		if(chargeTimeMillis > 0.0f) {
+			long now = System.currentTimeMillis();
+			
 			int slap_pos = (int)x_location;
 			if(facing == Facing.RIGHT)
 				slap_pos+=width;
-			environment.slap((int)slap_pos, facing);
-			lastSlapMillis = now;
+			
+			if( (chargeTimeMillis * 0.001f) > LAUNCH_CHARGE_TIME) {
+				//we are over teh charge time threshold, launch attack
+				environment.launch((int)slap_pos, facing);
+			} else {
+				//we didn't charge the slap long enough, slap attack
+				environment.slap((int)slap_pos, facing);
+			}
+			
+			lastSlapMillis = now;			
 		}
+		chargeTimeMillis = (long)-0.00001f;
 	}
+	
 }

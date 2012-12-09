@@ -11,6 +11,7 @@ public interface Environment {
 		double getGravity();
 		void initImages() throws SlickException;
 		void slap(int x_position, Facing facing);
+		void launch(int x_position, Facing facing);
 		//void setWidth(int w);
 		//void setHeight(int h);
 }
