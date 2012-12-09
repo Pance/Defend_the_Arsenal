@@ -1,6 +1,8 @@
 package slick.Defend;
 
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+
 import java.util.ArrayList;
 
 public class Player {
@@ -21,12 +23,18 @@ public class Player {
 	private Image imageLeft;
 	private Environment environment;
 	
-	public Player(int x, int y, Image right, Image left, Environment e) {
-		imageRight = right.getScaledCopy(IMAGE_SCALE);
-		imageLeft = left.getScaledCopy(IMAGE_SCALE);
+	
+	
+	public Player(int x, int y, Environment e) {
 		x_location = x;
 		y_location = y;
 		environment = e;
+	}
+	
+	public void initImages() throws SlickException {
+		imageRight = new Image("resources/tux/idle/r/1.png").getScaledCopy(IMAGE_SCALE);
+		imageLeft = new Image("resources/tux/idle/l/1.png").getScaledCopy(IMAGE_SCALE);
+		
 	}
 	
 	public void draw(){
@@ -75,7 +83,7 @@ public class Player {
 		return (int) x_location;
 	}
 	
-	public void slap() {
-		
+	public void startSlap() {
+		//environment.
 	}
 }
