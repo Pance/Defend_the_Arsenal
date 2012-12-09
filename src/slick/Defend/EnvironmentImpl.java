@@ -62,6 +62,10 @@ public class EnvironmentImpl implements Environment{
 						if(e.getX() < closest.getX() && e.getX() > x_position)
 							closest = e;
 					}
+					if(facing == Facing.LEFT) {
+						if(e.getX() > closest.getX() && e.getX() < x_position)
+							closest = e;
+					}
 				}
 			}
 		}

@@ -1,6 +1,7 @@
 package slick.Defend;
 
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
 import slick.Defend.Player.Facing;
 
@@ -27,10 +28,10 @@ public class Enemy {
 		this.player = player;		
 	}
 	
-	public Enemy(Player player, Image img) {
-		this(player);
-		image = img;
-		width = img.getWidth();
+	public void initImages() throws SlickException{
+		Image i = new Image("resources/troll/troll.png");
+		i = i.getScaledCopy(3.0f);
+		image = i;
 	}
 	
 	public int getX() {
@@ -76,5 +77,9 @@ public class Enemy {
 			if( x < player.getX())
 				x+=(speed * ((double)millisSinceLastThink * 0.001f));
 		}
+	}
+	
+	public void draw() {
+		image.draw((int)x, (int)y);
 	}
 }

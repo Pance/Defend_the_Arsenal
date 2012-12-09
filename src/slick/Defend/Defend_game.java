@@ -20,8 +20,6 @@ public class Defend_game extends BasicGame{
 	static final int MAX_ENEMIES = 5;
 	static long lastTime = 0;
 	
-	Image troll = null;
-	
 	Environment environment = null;
 	Player player = null;
 	
@@ -39,12 +37,12 @@ public class Defend_game extends BasicGame{
 		
 		player = new Player(PLAYER_START_X, PLAYER_START_Y, environment);
 		player.initImages();
-		
-		troll = new Image("resources/troll/troll.png");
-		troll = troll.getScaledCopy(3.0f);
-		
-		for(int i=0; i<MAX_ENEMIES; i++)
-			enemies.add(new Enemy(player, troll));
+				
+		for(int i=0; i<MAX_ENEMIES; i++) {
+			Enemy e = new Enemy(player);
+			e.initImages();
+			enemies.add(e);
+		}
 		
 		lastTime = System.currentTimeMillis();
 	}
@@ -54,8 +52,7 @@ public class Defend_game extends BasicGame{
 		Input input = gc.getInput();
 		
 		long now = System.currentTimeMillis();
-		
-		//input.isKeyDown()
+
 		if(input.isKeyDown(Input.KEY_SPACE))
 			player.chargeSlap();
 		else
@@ -67,10 +64,6 @@ public class Defend_game extends BasicGame{
 			player.accelerateRight(now - lastTime);
 		if( (!input.isKeyDown(Input.KEY_A)) && (!input.isKeyDown(Input.KEY_D)) )
 			player.deccelerate(now - lastTime);
-		//if(input.isKeyDown(Input.KEY_S))
-			//player.changeY(1);
-		//if(input.isKeyDown(Input.KEY_W))
-			//player.changeY(-1);
 		
 		player.step(now - lastTime);
 		
@@ -85,7 +78,7 @@ public class Defend_game extends BasicGame{
 		player.draw();
 		environment.drawGround();
 		for( Enemy e : enemies)
-			troll.draw(e.getX(), e.getY());
+			e.draw();
 	}
 	
 	public static void main(String[] args) throws SlickException {
