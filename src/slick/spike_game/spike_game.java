@@ -12,12 +12,13 @@ import java.util.ArrayList;
 
 public class spike_game extends BasicGame{
 	
-	static final int PLAYER_START_X = 200;
+	static final int PLAYER_START_X = 350;
 	static final int PLAYER_START_Y = 200;
 	static final int WINDOW_WIDTH = 1024;
 	static final int WINDOW_HEIGHT = 600;
 	static final int GROUND_HEIGHT = 300;
 	static final int MAX_ENEMIES = 5;
+	static long lastTime = 0;
 	
 	Image troll = null;
 	
@@ -38,30 +39,40 @@ public class spike_game extends BasicGame{
 		environment = new EnvironmentImpl(WINDOW_WIDTH, WINDOW_HEIGHT, land, GROUND_HEIGHT, ground);
 		
 		Image player_image = new Image("resources/tux/idle/r/1.png");
-		player = new Player(PLAYER_START_X, PLAYER_START_Y, player_image);
+		player = new Player(PLAYER_START_X, PLAYER_START_Y, player_image, environment);
 		
 		troll = new Image("resources/troll/troll.png");
 		troll = troll.getScaledCopy(3.0f);
 		
 		for(int i=0; i<MAX_ENEMIES; i++)
 			enemies.add(new Enemy());
+		
+		lastTime = System.currentTimeMillis();
 	}
 	
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException {
 		Input input = gc.getInput();
 		
+		long now = System.currentTimeMillis();
+		
 		if(input.isKeyDown(Input.KEY_A))
-			player.changeX(-1);
+			player.accelerateLeft(now - lastTime);
 		if(input.isKeyDown(Input.KEY_D))
-			player.changeX(1);
-		if(input.isKeyDown(Input.KEY_S))
-			player.changeY(1);
-		if(input.isKeyDown(Input.KEY_W))
-			player.changeY(-1);
+			player.accelerateRight(now - lastTime);
+		if(input.isKeyDown(Input.KEY_A) && input.isKeyDown(Input.KEY_D))
+			player.deccelerate(now - lastTime);
+		//if(input.isKeyDown(Input.KEY_S))
+			//player.changeY(1);
+		//if(input.isKeyDown(Input.KEY_W))
+			//player.changeY(-1);
+		
+		player.step(now - lastTime);
 		
 		for(Enemy e : enemies)
 			e.think();
+		
+		lastTime = now;
 	}
 	
 	public void render(GameContainer gc, Graphics g) throws SlickException {

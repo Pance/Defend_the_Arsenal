@@ -3,6 +3,7 @@ package slick.spike_game;
 import org.newdawn.slick.Image;
 
 public class EnvironmentImpl implements Environment{
+	private final double GRAVITY = 3.0f;
 	private int width;
 	private int height;
 	private int groundHeight;
@@ -32,5 +33,9 @@ public class EnvironmentImpl implements Environment{
 	public void draw() {
 		drawBackground();
 		drawGround();		
+	}
+	
+	public double getGravity() {
+		return GRAVITY;
 	}
 }
