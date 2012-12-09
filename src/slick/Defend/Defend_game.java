@@ -32,11 +32,10 @@ public class Defend_game extends BasicGame{
 	}
 	
 	@Override
-	public void init(GameContainer gc) throws SlickException {
-		
+	public void init(GameContainer gc) throws SlickException {		
 		Image land  = new Image("resources/background.jpeg");
 		Image ground = new Image("resources/ground.png");
-		environment = new EnvironmentImpl(WINDOW_WIDTH, WINDOW_HEIGHT, land, GROUND_HEIGHT, ground);
+		environment = new EnvironmentImpl(WINDOW_WIDTH, WINDOW_HEIGHT, land, GROUND_HEIGHT, ground, enemies);
 		
 		Image player_image_right = new Image("resources/tux/idle/r/1.png");
 		Image player_image_left = new Image("resources/tux/idle/l/1.png");

@@ -1,5 +1,7 @@
 package slick.Defend;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.Image;
 
 public class EnvironmentImpl implements Environment{
@@ -9,13 +11,15 @@ public class EnvironmentImpl implements Environment{
 	private int groundHeight;
 	private Image backgroundImage;
 	private Image groundImage;
+	private ArrayList<Enemy> enemies;
 	
-	public EnvironmentImpl(int width, int height, Image image, int groundHeight, Image groundImage){
+	public EnvironmentImpl(int width, int height, Image image, int groundHeight, Image groundImage, ArrayList<Enemy> enemies){
 		this.width = width;
 		this.height = height;
 		this.groundHeight = groundHeight;
 		backgroundImage = image.getScaledCopy(width, height);
 		this.groundImage = groundImage.getScaledCopy(width, groundImage.getHeight());
+		this.enemies = enemies;
 	}
 	
 	public int getGroundHeight() {

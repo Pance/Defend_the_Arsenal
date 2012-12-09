@@ -1,12 +1,13 @@
 package slick.Defend;
 
 import org.newdawn.slick.Image;
+import java.util.ArrayList;
 
 public class Player {
 	
 	private final float IMAGE_SCALE = 3.0f;
 	private final double ACCELERATION_RATE = 5.0f; // Increase dx by this amount per second
-	private final double MAX_RUN_SPEED = 8.0f; // Maximum speed player can move
+	private final double MAX_RUN_SPEED = 80.0f; // Maximum speed player can move
 	private enum Facing { LEFT, RIGHT };
 	
 	private double x_location;
@@ -35,8 +36,8 @@ public class Player {
 	}
 	
 	public void step(long millisSinceLastStep) {
-		if(isInAir())
-			dy-=environment.getGravity();
+		//if(isInAir())
+			//dy-=environment.getGravity();
 		//x_location = x_location + (dx*(millisSinceLastStep/1000));
 		//y_location = y_location + (dy/(millisSinceLastStep/1000));
 	}
@@ -51,7 +52,7 @@ public class Player {
 		if(-dx > MAX_RUN_SPEED)
 			dx = -MAX_RUN_SPEED;
 		*/
-		x_location-=(MAX_RUN_SPEED * (millisSinceLastStep/10));
+		x_location-=(MAX_RUN_SPEED * (millisSinceLastStep * 0.001f));
 		facing = Facing.LEFT;
 	}
 	
@@ -61,7 +62,7 @@ public class Player {
 		if(dx > MAX_RUN_SPEED)
 			dx = MAX_RUN_SPEED;
 		*/
-		x_location+=(MAX_RUN_SPEED * (millisSinceLastStep/10));
+		x_location+=(MAX_RUN_SPEED * (millisSinceLastStep * 0.001f));
 		facing = Facing.RIGHT;
 	}
 	
