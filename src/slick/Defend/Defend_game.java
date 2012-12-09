@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Defend_game extends BasicGame{
 	
 	static final int PLAYER_START_X = 350;
-	static final int PLAYER_START_Y = 200;
+	static final int PLAYER_START_Y = 230;
 	static final int WINDOW_WIDTH = 1024;
 	static final int WINDOW_HEIGHT = 600;
 	static final int GROUND_HEIGHT = 300;
@@ -61,14 +61,14 @@ public class Defend_game extends BasicGame{
 			player.accelerateLeft(now - lastTime);
 		if(input.isKeyDown(Input.KEY_D))
 			player.accelerateRight(now - lastTime);
-		if(input.isKeyDown(Input.KEY_A) && input.isKeyDown(Input.KEY_D))
+		if( (!input.isKeyDown(Input.KEY_A)) && (!input.isKeyDown(Input.KEY_D)) )
 			player.deccelerate(now - lastTime);
 		//if(input.isKeyDown(Input.KEY_S))
 			//player.changeY(1);
 		//if(input.isKeyDown(Input.KEY_W))
 			//player.changeY(-1);
 		
-		//player.step(now - lastTime);
+		player.step(now - lastTime);
 		
 		for(Enemy e : enemies)
 			e.think(now - lastTime);

@@ -6,8 +6,9 @@ import java.util.ArrayList;
 public class Player {
 	
 	private final float IMAGE_SCALE = 3.0f;
-	private final double ACCELERATION_RATE = 5.0f; // Increase dx by this amount per second
-	private final double MAX_RUN_SPEED = 80.0f; // Maximum speed player can move
+	private final double ACCELERATION_RATE = 160.0f; // Increase dx by this amount per second
+	private final double DECCELERATION_RATE = 130.0f;
+	private final double MAX_RUN_SPEED = 120.0f; // Maximum speed player can move px/second
 	private enum Facing { LEFT, RIGHT };
 	
 	private double x_location;
@@ -38,8 +39,9 @@ public class Player {
 	public void step(long millisSinceLastStep) {
 		//if(isInAir())
 			//dy-=environment.getGravity();
-		//x_location = x_location + (dx*(millisSinceLastStep/1000));
 		//y_location = y_location + (dy/(millisSinceLastStep/1000));
+		if(dx != 0.0f)
+			x_location+=((double)dx * (millisSinceLastStep * 0.001f));
 	}
 	
 	public boolean isInAir() {
@@ -47,33 +49,26 @@ public class Player {
 	}
 	
 	public void accelerateLeft(long millisSinceLastStep) {
-		/*
-		dx -= (ACCELERATION_RATE/(millisSinceLastStep/1000));
-		if(-dx > MAX_RUN_SPEED)
+		dx-=( ACCELERATION_RATE * (millisSinceLastStep * 0.001f) );
+		if( dx < -MAX_RUN_SPEED )
 			dx = -MAX_RUN_SPEED;
-		*/
-		x_location-=(MAX_RUN_SPEED * (millisSinceLastStep * 0.001f));
+		//dx = -MAX_RUN_SPEED;
 		facing = Facing.LEFT;
 	}
 	
 	public void accelerateRight(long millisSinceLastStep) {
-		/*
-		dx += (ACCELERATION_RATE/(millisSinceLastStep/1000));
-		if(dx > MAX_RUN_SPEED)
+		dx+=( ACCELERATION_RATE * (millisSinceLastStep * 0.001f) );
+		if( dx > MAX_RUN_SPEED )
 			dx = MAX_RUN_SPEED;
-		*/
-		x_location+=(MAX_RUN_SPEED * (millisSinceLastStep * 0.001f));
+		//dx = MAX_RUN_SPEED;
 		facing = Facing.RIGHT;
 	}
 	
-	public void deccelerate(long timeSinceLastStep) {
-		dx = 0;
-		/*
-		if(dx > 0.0f)
-			dx-= (ACCELERATION_RATE*2)/(timeSinceLastStep/1000);
-		if(dx < 0.0f)
-			dx+= (ACCELERATION_RATE*2)/(timeSinceLastStep/1000);
-			*/
+	public void deccelerate(long millisSinceLastStep) {
+		if(dx > 0 )
+			dx-=( DECCELERATION_RATE * (millisSinceLastStep * 0.001f) );
+		if(dx < 0 )
+			dx+=( DECCELERATION_RATE * (millisSinceLastStep * 0.001f) );
 	}
 	
 	public int getX() {

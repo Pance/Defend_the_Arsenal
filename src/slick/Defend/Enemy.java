@@ -8,8 +8,8 @@ public class Enemy {
 	private Player player;
 	
 	public Enemy() {
-		x = 100;
-		y = 100;
+		x = 0;
+		y = 250;
 	}
 	
 	public Enemy(Player player) {
