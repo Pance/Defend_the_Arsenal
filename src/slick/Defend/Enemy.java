@@ -3,10 +3,11 @@ package slick.Defend;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import org.newdawn.slick.SpriteSheet;
 import slick.Defend.Player.Facing;
 
 public class Enemy {
-	private final double FALL_SPEED = 40.0f; // pixels per second
+	private final double FALL_SPEED = 400.0f; // pixels per second
 	
 	private double x;
 	private double y;
@@ -19,7 +20,7 @@ public class Enemy {
 	
 	public Enemy() throws SlickException {
 		x = 0;
-		y = 250;
+		y = 400;
 		groundHeight = (int)y;
 		initImages();
 	}
@@ -30,7 +31,9 @@ public class Enemy {
 	}
 	
 	public void initImages() throws SlickException{
-		Image i = new Image("resources/troll/troll.png");
+        SpriteSheet sheetLeft = new SpriteSheet("resources/z_walk_left.png", 32, 32);
+        SpriteSheet sheetRight = new SpriteSheet("resources/z_walk_right.png", 32, 32);
+		Image i = sheetRight.getSprite(0,0);
 		i = i.getScaledCopy(3.0f);
 		image = i;
 	}
