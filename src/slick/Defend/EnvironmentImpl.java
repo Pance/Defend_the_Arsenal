@@ -32,6 +32,13 @@ public class EnvironmentImpl implements Environment{
 		groundImage = groundImage.getScaledCopy(width, groundImage.getHeight()-100);
 	}
 	
+	public void step(long millisSinceLastStep) {
+		/*
+		for(Bomb b : bombs)
+			b.step(millisSinceLastStep);
+			*/
+	}
+	
 	public int getGroundHeight() {
 		return groundHeight;
 	}
@@ -45,8 +52,13 @@ public class EnvironmentImpl implements Environment{
 	}
 	
 	public void draw() {
-		drawBackground();
-		drawGround();
+		//drawBackground();
+		//drawGround();
+		/*
+		if(!bombs.isEmpty())
+			for(Bomb b : bombs)
+				if(b == null) System.out.println("null bomb in env.draw()");
+				else b.draw(); */
 	}
 	
 	public double getGravity() {

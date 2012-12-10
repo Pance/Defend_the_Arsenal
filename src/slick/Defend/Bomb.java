@@ -23,14 +23,12 @@ public class Bomb {
 		this.y = y;
 		this.dx = dx;
 		this.dy = dy;
-		
 		initImages();
 	}
 	
 	public void initImages() throws SlickException {
-		SpriteSheet sheet = new SpriteSheet("resources/Sticky_waiting.png", 2, 1);
-		img1 = sheet.getSubImage(0, 0);
-		img2 = sheet.getSubImage(1,0);
+		img1 = new Image("resources/bomb/bomb1.png");
+		img2 = new Image("resources/bomb/bomb2.png");
 	}
 	
 	public void draw() {
@@ -38,7 +36,7 @@ public class Bomb {
 	}
 	
 	public void step(long millisSinceLastStep) {
-		lifeTimeMillis+= millisSinceLastStep;
+		//lifeTimeMillis+= millisSinceLastStep;
 		flashTimeMillis+=millisSinceLastStep;
 		
 		if(dx != 0.0f)
