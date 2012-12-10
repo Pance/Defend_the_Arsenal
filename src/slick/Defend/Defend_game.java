@@ -7,6 +7,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Sound;
 
 import java.util.ArrayList;
 
@@ -23,15 +24,19 @@ public class Defend_game extends BasicGame{
 	Environment environment = null;
 	Player player = null;
 	
+	Sound music = null;
+	
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-	ArrayList<Bomb> bombs = new ArrayList<Bomb>();
 	
 	public Defend_game(){
 		super("Defend the Arsenal!");
 	}
 	
 	@Override
-	public void init(GameContainer gc) throws SlickException {		
+	public void init(GameContainer gc) throws SlickException {
+		
+		music = new Sound("resources/music.ogg");
+		music.stop();
 
 		environment = new EnvironmentImpl(WINDOW_WIDTH, WINDOW_HEIGHT, GROUND_HEIGHT, enemies);
 		
@@ -63,11 +68,12 @@ public class Defend_game extends BasicGame{
 			player.accelerateRight(now - lastTime);
 		if( (!input.isKeyDown(Input.KEY_A)) && (!input.isKeyDown(Input.KEY_D)) )
 			player.deccelerate(now - lastTime);
+		if( input.isKeyPressed(Input.KEY_E))
+			;//player.launchBomb();
 		
 		player.step(now - lastTime);
 		
-		for(Bomb b : bombs)
-			b.step(now - lastTime);
+		environment.step(now - lastTime);
 		
 		for(Enemy e : enemies)
 			e.think(now - lastTime);
@@ -81,8 +87,10 @@ public class Defend_game extends BasicGame{
 		environment.drawGround();
 		for( Enemy e : enemies)
 			e.draw();
-		for( Bomb b : bombs)
-			b.draw();
+		environment.draw(); // draw bombs
+		
+		if(!music.playing())
+			music.play();
 	}
 	
 	public static void main(String[] args) throws SlickException {

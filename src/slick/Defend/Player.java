@@ -134,8 +134,10 @@ public class Player {
 	public void launchBomb() throws SlickException {
 		if((lastBombMillis * 0.001f) > BOMB_COOLDOWN ) {
 			Bomb b = new Bomb((int)x_location, (int)y_location, 0, 0);
-			environment.addBomb(b);
-			lastBombMillis = System.currentTimeMillis();
+			if(b != null) {
+				environment.addBomb(b);
+				lastBombMillis = System.currentTimeMillis();
+			}
 		}
 	}
 }

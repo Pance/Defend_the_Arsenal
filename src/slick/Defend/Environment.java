@@ -13,6 +13,8 @@ public interface Environment {
 		void slap(int x_position, Facing facing);
 		void launch(int x_position, Facing facing);
 		void addBomb(Bomb b);
+		void step(long millisSinceLastStep);
+		void draw();
 		//void setWidth(int w);
 		//void setHeight(int h);
 }
