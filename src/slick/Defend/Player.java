@@ -3,6 +3,7 @@ package slick.Defend;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.opengl.ImageData;
 
 import java.util.ArrayList;
 
@@ -24,7 +25,8 @@ public class Player {
 	private Facing facing = Facing.RIGHT;
 	private int width = 300; // Width in pixels
 	
-	private Image imageRight;
+	private Image imageRightOpen;
+    private Image imageRightClosed;
 	private Image imageLeft;
 	private Environment environment;
 	private SpriteSheet playerLeft;
@@ -42,18 +44,20 @@ public class Player {
 	}
 	
 	public void initImages() throws SlickException {
-		SpriteSheet sheetLeft = new SpriteSheet("resources/Hero_left.png", 2, 1);
-		SpriteSheet sheetRight = new SpriteSheet("resources/Hero_right.png", 2, 1);
-		
-		imageRight = new Image("resources/tux/idle/r/1.png").getScaledCopy(IMAGE_SCALE);
-		imageLeft = new Image("resources/tux/idle/l/1.png").getScaledCopy(IMAGE_SCALE);
-		width = imageRight.getWidth();
+		SpriteSheet sheetLeft = new SpriteSheet("resources/Hero_left.png", 32, 32);
+		SpriteSheet sheetRight = new SpriteSheet("resources/Hero_right.png", 32, 32);
+		imageRightOpen = sheetRight.getSprite(1,0).getScaledCopy(IMAGE_SCALE);
+        imageRightClosed = sheetRight.getSprite(0,1).getScaledCopy(IMAGE_SCALE);
+		imageLeft = sheetLeft.getSprite(0,0).getScaledCopy(IMAGE_SCALE);
+		width = imageRightOpen.getWidth();
 	}
 	
 	public void draw(){
-		if(facing == Facing.RIGHT)
-			imageRight.draw((int)x_location, (int)y_location);
-		else
+
+		if(facing == Facing.RIGHT){
+			imageRightOpen.draw((int)x_location, (int)y_location);
+            imageRightClosed.draw((int)x_location, (int)y_location);
+        }else
 			imageLeft.draw((int)x_location, (int)y_location);
 	}
 	
@@ -68,6 +72,7 @@ public class Player {
 	}
 	
 	public void accelerateLeft(long millisSinceLastStep) {
+
 		dx-=( ACCELERATION_RATE * (millisSinceLastStep * 0.001f) );
 		if( dx < -MAX_RUN_SPEED )
 			dx = -MAX_RUN_SPEED;
